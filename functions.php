@@ -1,9 +1,10 @@
 <?php  
+// Function to add a user to the database
 function addUser($conn, $username, $password) {
 	$sql = "SELECT * FROM registered WHERE username=?";
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([$username]);
-
+    // Check if the username already exists
 	if($stmt->rowCount()==0) {
 		$sql = "INSERT INTO registered (username,password) VALUES (?,?)";
 		$stmt = $conn->prepare($sql);
@@ -17,7 +18,6 @@ function login($conn, $username, $password) {
 	$stmt->execute([$username]);
 
 	if($stmt->rowCount() == 1) {
-		// returns associative array
 		$row = $stmt->fetch();
 
 		// store user info as a session variable
